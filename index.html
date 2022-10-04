@@ -10,3 +10,82 @@
     </div>
     <div class="video_layer"><iframe src="" border="0" data-scaling="true" data-format="16:9"></iframe></div>
 </div>
+
+
+<!-- SCRIPT BEREICH COOKIES -->
+<script type="text/javascript" src="jquery.ihavecookies.js"></script>	
+
+<script>  	
+// DATENSCHUTZ COOKIES FUNKTIONEN
+var options = {
+    title: '&#x1F36A; Cookies & Datenschutz',
+    message: 'Wir nutzen Cookies auf unserer Website, um Ihren Besuch bei uns so angenehm wie möglich zu gestalten. Ihre Einwilligung können Sie jederzeit widerrufen. Weitere Informationen finden Sie in unserer Datenschutzerklärung.',
+    delay: 600,
+    expires: 1,
+    link: 'https://www.website.de/datenschutz',
+    onAccept: function(){
+        var myPreferences = $.fn.ihavecookies.cookie();
+      //  console.log('Yay! The following preferences were saved...');
+      //  console.log(myPreferences);
+        if ($.fn.ihavecookies.preference('analytics') === true) {
+            loadGAonConsent();
+        }
+        if ($.fn.ihavecookies.preference('analytics') === false) {
+            gaOptout();			
+        }			
+    },
+    uncheckBoxes: true,
+    acceptBtnLabel: 'Auswahl akzeptieren',
+    moreInfoLabel: 'Datenschutz',
+    cookieTypesTitle: 'Wählen Sie welche Cookies Sie erlauben',
+    fixedCookieTypeLabel: 'Notwendig',
+    fixedCookieTypeDesc: 'Notwendige Cookies ermöglichen grundlegende Funktionen und sind für die Website erforderlich.'
+}
+
+$(document).ready(function() {
+    $('body').ihavecookies(options);	
+    if ($.fn.ihavecookies.preference('analytics') === true) {
+        loadGAonConsent();			
+    }	
+    if ($.fn.ihavecookies.preference('analytics') === false) {
+ //       gaOptout();			
+    }			
+    //onclick aktion dass Die Cookie Übersicht öffnet
+    $('#ihavecookiesBtn').on('click', function(event){
+        event.preventDefault();
+        $('body').ihavecookies(options, 'reinit');
+    });
+});
+//Funktion die Google analytics erstellt bei Einwilligung
+function loadGAonConsent() {
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-XXXXXXX-X ', 'auto');
+    ga('set', 'anonymizeIp', true);
+    ga('send', 'pageview');
+    var gascript = document.createElement("script");
+    gascript.async = true;
+    gascript.src = "https://www.google-analytics.com/analytics.js";
+    document.getElementsByTagName("head")[0].appendChild(gascript, document.getElementsByTagName("head")[0]);   
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '139184844742862');
+    fbq('track', 'PageView'); 
+
+}  
+
+var gaProperty = 'UA-XXXXXXX-X';
+var disableStr = 'ga-disable-' + gaProperty;
+if (document.cookie.indexOf(disableStr + '=true') > -1) {
+    window[disableStr] = true;
+}
+function gaOptout() {
+    document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+    window[disableStr] = true;
+}	  
+</script>	
